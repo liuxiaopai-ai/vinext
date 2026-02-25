@@ -10,6 +10,8 @@ permissions: {}
 
 jobs:
   publish:
+    # pkg-pr-new GitHub App is installed on upstream; forks will fail.
+    if: github.repository == 'cloudflare/vinext'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
