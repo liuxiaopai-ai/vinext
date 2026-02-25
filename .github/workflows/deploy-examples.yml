@@ -8,6 +8,8 @@ on:
 
 jobs:
   deploy:
+    # Deploy workflows require Cloudflare credentials; run only in upstream.
+    if: github.repository == 'cloudflare/vinext'
     name: Deploy ${{ matrix.example.name }}
     runs-on: ubuntu-latest
     permissions:
@@ -85,6 +87,7 @@ jobs:
           command: versions upload --config ${{ matrix.example.wrangler_config }} --preview-alias pr-${{ github.event.pull_request.number }}
 
   smoke-test:
+    if: github.repository == 'cloudflare/vinext'
     name: Smoke Test Deployments
     runs-on: ubuntu-latest
     needs: deploy
@@ -100,6 +103,7 @@ jobs:
         run: ./scripts/smoke-test.sh --preview pr-${{ github.event.pull_request.number }}
 
   comment:
+    if: github.repository == 'cloudflare/vinext'
     name: Comment Preview URLs
     runs-on: ubuntu-latest
     needs: deploy

@@ -12,6 +12,9 @@ concurrency:
 
 jobs:
   benchmark:
+    # These jobs require secrets/tokens (dashboard upload) and are intended for upstream only.
+    # Skipping them in forks prevents noisy failed runs + email spam.
+    if: github.repository == 'cloudflare/vinext'
     name: Run Benchmarks
     runs-on: ubuntu-latest
     timeout-minutes: 30
